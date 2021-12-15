@@ -10,7 +10,7 @@ amqp.connect("amqp://localhost", function(error0, connection) {
             throw error1;
         }
 
-        var queue = "hello";
+        var queue = "beneficiary";
 
         channel.assertQueue(queue, {
             durable: false
@@ -19,7 +19,9 @@ amqp.connect("amqp://localhost", function(error0, connection) {
         console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", queue);
 
         channel.consume(queue, function(msg) {
-            console.log(" [x] Received %s", msg.content.toString());
+            let payload = JSON.parse(msg.content.toString());
+
+            console.log(" [x] Received %s", payload);
         }, {
             noAck: true
         });
